@@ -1,0 +1,30 @@
+{
+  "name": "net_project",
+  "version": "1.0.0",
+  "description": "An audiovisual mobile app that presents the reflections of BSU students on the university search and recruitment process. The interface could include a series of words (e.g. ‘Anxiety’, ‘Uncertainty’, ‘Excitement’, ‘Resonance’), and/or a minimal representation of a journey (e.g. wending dotted lines). The words are touchable and trigger first a brief generated snippet of music appropriate to that word, and then a related excerpt.",
+  "main": "index.js",
+  "scripts": {
+    "clean": "rm dist/* && rm dev/*",
+    "env": "env",
+    "start": "webpack serve --open --config webpack.dev.config.js",
+    "prebuild-prod": "cp -r src/media/* dist/media",
+    "build-prod": "webpack --config webpack.prod.config.js && babel dist -d dist",
+    "prebuild-dev": "cp -r src/media/* dev/media",
+    "build-dev": "webpack --config webpack.dev.config.js --watch"
+  },
+  "author": "Ron Herrema, Henry James",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/cli": "^7.17.6",
+    "@babel/core": "^7.17.8",
+    "css-loader": "^6.7.1",
+    "html-webpack-plugin": "^5.5.0",
+    "style-loader": "^3.3.1",
+    "webpack": "^5.70.0",
+    "webpack-cli": "^4.9.2",
+    "webpack-dev-server": "^4.7.4"
+  },
+  "dependencies": {
+    "pixi.js": "^6.3.2"
+  }
+}
