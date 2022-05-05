@@ -140,7 +140,7 @@
           n = r.n(i),
           o = r(645),
           s = r.n(o)()(n());
-      s.push([t.id, "body {\r\n    overflow: hidden;\r\n}\r\n\r\ncanvas {\r\n    position: center;\r\n}", ""]);
+      s.push([t.id, "html, body {\r\n    margin: 0 !important;\r\n    padding: 0 !important;\r\n    overflow: hidden;\r\n}", ""]);
       const a = s;
     },
     924: (t, e, r) => {
@@ -13239,13 +13239,39 @@
         bh = {};
     bh.styleTagTransform = gh(), bh.setAttributes = ph(), bh.insert = dh().bind(null, "head"), bh.domAPI = lh(), bh.insertStyleElement = vh(), hh()(Th.Z, bh), Th.Z && Th.Z.locals && Th.Z.locals, window.innerWidth, window.innerHeight;
     const xh = new Rn({
-      resizeTo: window
+      resizeTo: window,
+      resolution: window.devicePixelRatio || 1
     });
-    document.body.appendChild(xh.view), xh.loader.add("bunny", "media/nicebathmatt.png").load((t, e) => {
-      const r = new rs(e.bunny.texture);
-      r.x = xh.renderer.width / 2.2, r.y = xh.renderer.height / 2.2, r.anchor.x = .5, r.anchor.y = .5, xh.stage.addChild(r), xh.ticker.add(() => {
-        r.rotation += .008;
+    document.body.appendChild(xh.view);
+    const Rh = new We();
+    xh.stage.addChild(Rh), xh.loader.add("bathmatt", "media/nicebathmatt.png").load((t, e) => {
+      const r = new rs(e.bathmatt.texture);
+      r.x = xh.renderer.width / 2, r.y = xh.renderer.height / 2, r.anchor.x = .5, r.anchor.y = .5, Rh.addChild(r), xh.ticker.add(t => {
+        r.rotation -= .008 * t;
       });
     });
+    const Ah = new We();
+    xh.stage.addChild(Ah), Ah.visible = !1;
+    const Oh = Dr.from("media/spidey.png");
+
+    for (let t = 0; t < 25; t++) {
+      const e = new rs(Oh);
+      e.anchor.set(.5), e.x = t % 5 * 40, e.y = 40 * Math.floor(t / 5), Ah.addChild(e);
+    }
+
+    let Sh, Ih;
+    Ah.x = xh.screen.width / 2, Ah.y = xh.screen.height / 2, Ah.pivot.x = Ah.width / 2, Ah.pivot.y = Ah.height / 2, xh.ticker.add(t => {
+      Ah.rotation -= .01 * t;
+    });
+    let Ph,
+        Nh = !1,
+        Mh = !0;
+    onpointermove = function (t) {
+      Sh = t.clientX, Ih = t.clientY, !0 === Nh && !1 === Mh && Sh !== Ph && (Rh.visible = !Rh.visible, Ah.visible = !Ah.visible, Mh = !0), void 0 !== Sh && (Ph = Sh);
+    }, onpointerdown = function (t) {
+      Nh = !0, Mh = !1;
+    }, onpointerup = function (t) {
+      Nh = !1, Mh = !0;
+    };
   })();
 })();
