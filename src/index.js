@@ -1,5 +1,8 @@
 // import js modules
 import * as PIXI from 'pixi.js';
+import {
+    getRandomInt
+} from './usefulFunctions';
 
 // throw in the css as well
 import './css/normalise.css'
@@ -10,7 +13,12 @@ const sizes = {
     width: window.innerWidth,
     height: window.innerHeight
 }
-    
+window.addEventListener('resize', () => {
+    sizes.width = window.innerWidth;
+    sizes.height = window.innerHeight;
+});
+
+
 // The application will create a renderer using WebGL, if possible,
 // with a fallback to a canvas render. It will also setup the ticker
 // and the root stage PIXI.Container
@@ -32,13 +40,6 @@ app.stage.addChild(startContainer);
 
 const bezier = new PIXI.Graphics();
 
-bezier.lineStyle(sizes.width*0.1, 0xAA0000, 1);
-bezier.bezierCurveTo(sizes.height * 0.1, sizes.width * 0.2, sizes.width * 0.3, sizes.height * 0.4, sizes.height * 0.5, sizes.width * 0.6);
-
-bezier.position.x = 0;
-bezier.position.y = 0;
-
-
 startContainer.addChild(bezier);
 
 //////////////////////////////////////////////////////////////////////////////
@@ -52,7 +53,17 @@ onpointermove = function (e) {
     mouseY = e.clientY;
     if ((pointerDownFlag === true && onceDownFlag === false) && (lastMouseY - mouseY) > 50) {
         onceDownFlag = true;
-        
+        bezier.clear();
+        bezier.lineStyle(sizes.width * 0.1, 0xAA0000, 1);
+        bezier.bezierCurveTo(sizes.height * getRandomInt(1, 10) * 0.1, getRandomInt(1, 10), sizes.width * getRandomInt(1, 10) * 0.1, sizes.height * 0.4, sizes.height * 0.5, sizes.width * 0.6);
+
+        bezier.position.x = sizes.width * (getRandomInt(1, 2) * 0.1);
+        bezier.position.y = -10;
+        // swipe down  
+    }
+    if ((pointerDownFlag === true && onceDownFlag === false) && (mouseY - lastMouseY) > 50) {
+        onceDownFlag = true;
+        // swipe up
     }
     if (mouseX !== undefined) lastMouseX = mouseX;
     if (mouseY !== undefined) lastMouseY = mouseY;
